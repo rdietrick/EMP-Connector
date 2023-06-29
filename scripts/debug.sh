@@ -7,10 +7,13 @@ then
     INSTANCE_URL="https://github.my.salesforce.com"
 fi
 
-npx sfdx auth:device:login --instanceurl $INSTANCE_URL -a org
+npx sfdx auth:device:login --instance-url $INSTANCE_URL -a org
 PID=$!
 wait $PID
 
 ACCESS_TOKEN=$(npx sfdx force:org:display --json -u org | jq -r '.result.accessToken')
 
-java -classpath target/emp-connector-0.0.1-SNAPSHOT-phat.jar com.salesforce.emp.connector.example.BearerTokenExample $INSTANCE_URL "${ACCESS_TOKEN}" /data/LeadChangeEvent
+echo
+read -p "Enter the name of the channel you wish to subscribe to (e.g., /data/LeadChangeEvent): " CHANNEL
+
+java -classpath target/emp-connector-0.0.1-SNAPSHOT-phat.jar com.salesforce.emp.connector.example.BearerTokenExample $INSTANCE_URL "${ACCESS_TOKEN}" $CHANNEL
