@@ -21,7 +21,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install sfdxcli && mvn clean package"
+	"postCreateCommand": "npm install && mvn clean package"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

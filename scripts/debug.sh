@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ ! -d "node_modules/sfdx-cli" ] 
+then
+    npm install
+fi
+
 echo
 read -p "Enter Salesforce instance URL (e.g., https://github--uat.sandbox.my.salesforce.com/) or just press enter to use production: " INSTANCE_URL
 if [ -z $INSTANCE_URL ]
@@ -7,11 +12,11 @@ then
     INSTANCE_URL="https://github.my.salesforce.com"
 fi
 
-npx sfdx auth:device:login --instance-url $INSTANCE_URL -a org
+sfdx auth:device:login --instance-url $INSTANCE_URL -a org
 PID=$!
 wait $PID
 
-ACCESS_TOKEN=$(npx sfdx force:org:display --json -u org | jq -r '.result.accessToken')
+ACCESS_TOKEN=$(sfdx force:org:display --json -u org | jq -r '.result.accessToken')
 
 echo
 read -p "Enter the name of the channel you wish to subscribe to (e.g., /data/LeadChangeEvent): " CHANNEL
