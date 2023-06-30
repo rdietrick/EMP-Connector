@@ -7,11 +7,11 @@ then
     INSTANCE_URL="https://github.my.salesforce.com"
 fi
 
-npx sfdx auth:device:login --instance-url $INSTANCE_URL -a org
+npx sfdx-cli auth:device:login --instance-url $INSTANCE_URL -a org
 PID=$!
 wait $PID
 
-ACCESS_TOKEN=$(npx sfdx force:org:display --json -u org | jq -r '.result.accessToken')
+ACCESS_TOKEN=$(npx sfdx-cli force:org:display --json -u org | jq -r '.result.accessToken')
 
 echo
 read -p "Enter the name of the channel you wish to subscribe to (e.g., /data/LeadChangeEvent): " CHANNEL
